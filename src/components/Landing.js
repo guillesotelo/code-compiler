@@ -18,7 +18,7 @@ import LanguagesDropdown from "./LanguagesDropdown";
 
 const javascriptDefault = `// Code example
 
-console.log("Hello World!, नमस्ते दुनिया!, 你好, 世界！, مرحبًا بالعالم!, ¡Hola, mundo!, Привет, мир!")`;
+console.log("Hello World!")`;
 
 const Landing = () => {
   const [code, setCode] = useState(javascriptDefault);
@@ -56,8 +56,8 @@ const Landing = () => {
     const formData = {
       language_id: language.id,
       // encode source code in base64
-      source_code: btoa(code),
-      stdin: btoa(customInput),
+      source_code: btoa(unescape(encodeURIComponent(code))),
+      stdin: btoa(unescape(encodeURIComponent(customInput))),
     };
     const options = {
       method: "POST",
@@ -178,7 +178,6 @@ const Landing = () => {
         pauseOnHover
       />
 
-      <div className="h-4 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
       <div className="flex flex-row">
         <div className="px-4 py-2">
           <LanguagesDropdown onSelectChange={onSelectChange} />
