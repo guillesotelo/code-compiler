@@ -17,7 +17,8 @@ import ThemeDropdown from "./ThemeDropdown";
 import LanguagesDropdown from "./LanguagesDropdown";
 
 const javascriptDefault = `// Code example
-console.log("Hello World!\nनमस्ते दुनिया!\n你好, 世界！\nمرحبًا بالعالم!\n¡Hola, mundo!\nПривет, мир!")`;
+
+console.log("Hello World!, नमस्ते दुनिया!, 你好, 世界！, مرحبًا بالعالم!, ¡Hola, mundo!, Привет, мир!")`;
 
 const Landing = () => {
   const [code, setCode] = useState(javascriptDefault);
