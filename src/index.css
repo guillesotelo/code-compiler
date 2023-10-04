@@ -11,11 +11,15 @@
   margin: 0;
   padding: 0;
 }
-body {
+
+body,
+html {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 300;
   font-size: 14px;
-  background-color: rgb(149, 149, 149);
+  background-color: #1B2B34;
+  color: lightgray;
+  margin: 0;
 }
 
 .listItem:hover {
@@ -24,24 +28,71 @@ body {
 }
 
 .github-corner svg {
-  position:absolute;
-  right:0;
-  top:0;
-  mix-blend-mode:darken;
-  color:#ffffff;
-  fill:#000000;
+  position: absolute;
+  right: 0;
+  top: 0;
+  mix-blend-mode: darken;
+  color: #ffffff;
+  fill: #000000;
 }
+
 .github-corner:hover .octo-arm {
-  animation:octocat-wave .56s;
+  animation: octocat-wave .56s;
 }
+
+.dropdowns {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.monaco-editor {
+  padding: 15px 0;
+}
+
+.scroll-decoration {
+  display: none;
+}
+
+.output {
+  margin: .5rem;
+}
+
+.custom-input {
+  margin: .5rem;
+}
+
+.landing-mobile {
+  padding-bottom: 2rem;
+}
+
+button {
+  padding: 1rem !important;
+  font-size: 1.2rem;
+  background-color: #37586c !important;
+  transition: .3s;
+}
+
+button:hover {
+  opacity: .8;
+}
+
 @keyframes octocat-wave {
-  0%, 100% {
-    transform:rotate(0);
+
+  0%,
+  100% {
+    transform: rotate(0);
   }
-  20%, 60% { 
-    transform:rotate(-20deg);
-  
-  } 40%, 80% {
-    transform:rotate(10deg);
+
+  20%,
+  60% {
+    transform: rotate(-20deg);
+
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg);
   }
 }

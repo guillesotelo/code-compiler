@@ -1,20 +1,17 @@
 import React from "react";
 import { classnames } from "../utils/general";
 
-const CustomInput = ({ customInput, setCustomInput }) => {
+const CustomInput = ({ customInput, setCustomInput, isMobile }) => {
   return (
-    <>
-      {" "}
+    <div className={`${isMobile ? '' : 'w-full'} custom-input`}>
       <textarea
         rows="5"
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
         placeholder={`Custom input`}
-        className={classnames(
-          "focus:outline-none w-full border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white mt-2"
-        )}
+        className={`${isMobile ? 'w-full' : 'w-full mx-4'} outline-0 bg-[#121d23] p-4 rounded-md text-white font-normal text-sm overflow-y-auto`}
       ></textarea>
-    </>
+    </div>
   );
 };
 

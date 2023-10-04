@@ -27,6 +27,7 @@ const Landing = () => {
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState("cobalt");
   const [language, setLanguage] = useState(languageOptions[0]);
+  const isMobile = window.innerWidth < 1024
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
@@ -117,7 +118,7 @@ const Landing = () => {
       } else {
         setProcessing(false);
         setOutputDetails(response.data);
-        showSuccessToast(`Compiled Successfully!`);
+        // showSuccessToast(`Compiled Successfully!`);
         return;
       }
     } catch (err) {
@@ -162,63 +163,118 @@ const Landing = () => {
       draggable: true,
       progress: undefined,
     });
-  };
+  }
 
-  return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
-      <div className="flex flex-row">
-        <div className="px-4 py-2">
-          <LanguagesDropdown onSelectChange={onSelectChange} />
-        </div>
-        <div className="px-4 py-2">
-          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-        </div>
-      </div>
-      <div className="flex flex-row space-x-4 items-start px-4 py-4">
-        <div className="flex flex-col w-full h-full justify-start items-end">
-          <CodeEditorWindow
-            code={code}
-            onChange={onChange}
-            language={language?.value}
-            theme={theme.value}
-          />
-        </div>
-
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
-          <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
-            <CustomInput
-              customInput={customInput}
-              setCustomInput={setCustomInput}
+  const renderDesktop = () => {
+    return (
+      <>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <div className="flex flex-row space-x-4 items-start px-4 py-4">
+          <div style={{ height: '100vh' }} className="flex flex-col w-full h-full justify-start items-end">
+            <CodeEditorWindow
+              code={code}
+              onChange={onChange}
+              language={language?.value}
+              theme={theme.value}
             />
-            <button
-              onClick={handleCompile}
-              disabled={!code}
-              className={classnames(
-                "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
-                !code ? "opacity-50" : ""
-              )}
-            >
-              {processing ? "Processing..." : "Compile and Execute"}
-            </button>
           </div>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+            <div className="dropdowns">
+              <LanguagesDropdown onSelectChange={onSelectChange} />
+              <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+            </div>
+            <OutputWindow outputDetails={outputDetails} />
+            <div className="flex flex-col items-end">
+              <CustomInput
+                customInput={customInput}
+                setCustomInput={setCustomInput}
+              />
+              <button
+                onClick={handleCompile}
+                disabled={!code}
+                className={classnames(
+                  "mt-4 z-10 rounded-md bg-[#1e293b] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                  !code ? "opacity-50" : ""
+                )}
+              >
+                {processing ? "Processing..." : "Compile"}
+              </button>
+            </div>
+            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          </div>
         </div>
-      </div>
-      <Footer />
-    </>
-  );
-};
+        <Footer />
+      </>
+    )
+  }
+
+  const renderMobile = () => {
+    return (
+      <>
+        <div className="landing-mobile">
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <div className="flex flex-col h-full items-start w-screen">
+            <div style={{ height: '50vh', marginBottom: '1rem' }} className={`overflow-hidden w-full`}>
+              <CodeEditorWindow
+                code={code}
+                onChange={onChange}
+                language={language?.value}
+                theme={theme.value}
+              />
+            </div>
+            <div className="right-container flex flex-shrink-0 w-screen flex-col">
+              <button
+                onClick={handleCompile}
+                disabled={!code}
+                className={classnames(
+                  "m-3 rounded-md bg-[#1e293b] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                  !code ? "opacity-50" : ""
+                )}
+              >
+                {processing ? "Processing..." : "Compile"}
+              </button>
+            </div>
+            <div className="right-container flex flex-shrink-0 w-screen flex-col">
+              <OutputWindow outputDetails={outputDetails} />
+              <CustomInput
+                customInput={customInput}
+                setCustomInput={setCustomInput}
+                isMobile={isMobile}
+              />
+              {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+            </div>
+            <div className="dropdowns" style={{ margin: '.5rem' }}>
+              <LanguagesDropdown onSelectChange={onSelectChange} />
+              <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </>
+    )
+  }
+
+  return isMobile ? renderMobile() : renderDesktop()
+}
+
 export default Landing;

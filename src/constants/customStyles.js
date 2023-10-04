@@ -5,29 +5,35 @@ export const customStyles = {
     maxWidth: "14rem",
     minWidth: "12rem",
     borderRadius: "5px",
-    color: "#000",
+    color: "lightgray",
     fontSize: "0.8rem",
     lineHeight: "1.75rem",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#1e293b",
     cursor: "pointer",
-    border: "2px solid #000000",
-    boxShadow: "5px 5px 0px 0px rgba(0,0,0);",
+    border: "2px solid #314360",
     ":hover": {
-      border: "2px solid #000000",
-      boxShadow: "none",
+      border: "2px solid darkblue",
     },
+  }),
+  singleValue: (styles) => ({
+    ...styles,
+    color: 'lightgray',
+    borderColor: 'lightgray'
+  }),
+  indicatorSeparator: (styles) => ({
+    ...styles,
+    display: 'none'
   }),
   option: (styles) => {
     return {
       ...styles,
-      color: "#000",
+      color: "lightgray",
       fontSize: "0.8rem",
       lineHeight: "1.75rem",
       width: "100%",
-      background: "#fff",
+      backgroundColor: "#1e293b",
       ":hover": {
-        backgroundColor: "rgb(243 244 246)",
-        color: "#000",
+        opacity: '0.8',
         cursor: "pointer",
       },
     };
@@ -35,18 +41,17 @@ export const customStyles = {
   menu: (styles) => {
     return {
       ...styles,
-      backgroundColor: "#fff",
+      backgroundColor: "#1e293b",
       maxWidth: "14rem",
-      border: "2px solid #000000",
+      border: "2px solid #314360",
       borderRadius: "5px",
-      boxShadow: "5px 5px 0px 0px rgba(0,0,0);",
     };
   },
 
   placeholder: (defaultStyles) => {
     return {
       ...defaultStyles,
-      color: "#000",
+      color: "lightgray",
       fontSize: "0.8rem",
       lineHeight: "1.75rem",
     };
