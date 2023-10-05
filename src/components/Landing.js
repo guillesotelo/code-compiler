@@ -41,6 +41,7 @@ const Landing = () => {
       handleCompile();
     }
   }, [ctrlPress, enterPress]);
+
   const onChange = (action, data) => {
     switch (action) {
       case "code": {
@@ -48,10 +49,11 @@ const Landing = () => {
         break;
       }
       default: {
-        console.warn("case not handled!", action, data);
+        console.warn("Case not handled!", action, data);
       }
     }
   };
+
   const handleCompile = () => {
     setProcessing(true);
     const formData = {
@@ -60,6 +62,7 @@ const Landing = () => {
       source_code: btoa(unescape(encodeURIComponent(code))),
       stdin: btoa(unescape(encodeURIComponent(customInput))),
     };
+
     const options = {
       method: "POST",
       url: process.env.REACT_APP_RAPID_API_URL,
@@ -180,7 +183,7 @@ const Landing = () => {
           pauseOnHover
         />
         <div className="flex flex-row space-x-4 items-start px-4 py-4">
-          <div style={{ height: '100vh' }} className="flex flex-col w-full h-full justify-start items-end">
+          <div className="flex flex-col w-full h-full justify-start items-end">
             <CodeEditorWindow
               code={code}
               onChange={onChange}
@@ -193,22 +196,36 @@ const Landing = () => {
               <LanguagesDropdown onSelectChange={onSelectChange} />
               <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
             </div>
-            <OutputWindow outputDetails={outputDetails} />
+            <OutputWindow outputDetails={outputDetails} isMobile={isMobile} />
             <div className="flex flex-col items-end">
               <CustomInput
                 customInput={customInput}
                 setCustomInput={setCustomInput}
+                isMobile={isMobile}
               />
-              <button
-                onClick={handleCompile}
-                disabled={!code}
-                className={classnames(
-                  "mt-4 z-10 rounded-md bg-[#1e293b] text-white px-4 py-2 transition duration-200 flex-shrink-0",
-                  !code ? "opacity-50" : ""
-                )}
-              >
-                {processing ? "Processing..." : "Compile"}
-              </button>
+              <div className="px-3 right-container flex justify-between flex-shrink-0 gap-2 flex-row w-full">
+                <button
+                  onClick={handleCompile}
+                  disabled={!code || processing}
+                  className={classnames(
+                    "mt-4 z-10 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                    !code ? "opacity-50" : ""
+                  )}
+                >
+                  {processing ? "Processing..." : "Compile"}
+                </button>
+                <button
+                  onClick={() => onChange('code', '')}
+                  disabled={processing}
+                  style={{ backgroundColor: 'transparent' }}
+                  className={classnames(
+                    "mt-4 z-10 rounded-md bg-[#37586c] border border-gray text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                    !code ? "opacity-50" : ""
+                  )}
+                >
+                  Reset
+                </button>
+              </div>
             </div>
             {outputDetails && <OutputDetails outputDetails={outputDetails} />}
           </div>
@@ -234,7 +251,7 @@ const Landing = () => {
             pauseOnHover
           />
           <div className="flex flex-col h-full items-start w-screen">
-            <div style={{ height: '50vh', marginBottom: '1rem' }} className={`overflow-hidden w-full`}>
+            <div style={{ height: '40vh', marginBottom: '1rem' }} className={`overflow-hidden w-full`}>
               <CodeEditorWindow
                 code={code}
                 onChange={onChange}
@@ -245,17 +262,28 @@ const Landing = () => {
             <div className="right-container flex flex-shrink-0 w-screen flex-col">
               <button
                 onClick={handleCompile}
-                disabled={!code}
+                disabled={!code || processing}
                 className={classnames(
-                  "m-3 rounded-md bg-[#1e293b] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                  "mx-4 mb-4 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
                   !code ? "opacity-50" : ""
                 )}
               >
                 {processing ? "Processing..." : "Compile"}
               </button>
+              <button
+                onClick={() => onChange('code', '')}
+                disabled={processing}
+                style={{ backgroundColor: 'transparent' }}
+                className={classnames(
+                  "mx-4 z-10 rounded-md border-2 border-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                  !code ? "opacity-50" : ""
+                )}
+              >
+                Reset
+              </button>
             </div>
-            <div className="right-container flex flex-shrink-0 w-screen flex-col">
-              <OutputWindow outputDetails={outputDetails} />
+            <div className="right-container flex flex-shrink-0 flex-col">
+              <OutputWindow outputDetails={outputDetails} isMobile={isMobile}/>
               <CustomInput
                 customInput={customInput}
                 setCustomInput={setCustomInput}
@@ -263,7 +291,7 @@ const Landing = () => {
               />
               {outputDetails && <OutputDetails outputDetails={outputDetails} />}
             </div>
-            <div className="dropdowns" style={{ margin: '.5rem' }}>
+            <div className="dropdowns" style={{ margin: '.5rem auto' }}>
               <LanguagesDropdown onSelectChange={onSelectChange} />
               <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
             </div>

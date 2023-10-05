@@ -1,6 +1,6 @@
 import React from "react";
 
-const OutputWindow = ({ outputDetails }) => {
+const OutputWindow = ({ outputDetails, isMobile }) => {
   const getOutput = () => {
     let statusId = outputDetails?.status?.id;
 
@@ -34,11 +34,11 @@ const OutputWindow = ({ outputDetails }) => {
     }
   };
   return (
-    <div className="output">
-      <h1 className="font-bold text-xl bg-clip-text bg-gradient-to-r mb-2">
+    <div className="output" style={{ width: isMobile ? '92vw' : '', margin: isMobile ? '.5rem auto' : '' }}>
+      <h1 className="font-bold text-xl bg-clip-text bg-gradient-to-r my-2">
         Output
       </h1>
-      <div className="w-full h-56 bg-[#121d23] p-4 rounded-md text-white font-normal text-sm overflow-y-auto">
+      <div className={`${isMobile ? '' : 'w-full'} h-56 bg-[#121d23] p-4 rounded-md text-white font-normal text-sm overflow-y-auto`}>
         {outputDetails ? <>{getOutput()}</> : null}
       </div>
     </div>

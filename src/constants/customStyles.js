@@ -3,7 +3,6 @@ export const customStyles = {
     ...styles,
     width: "100%",
     maxWidth: "14rem",
-    minWidth: "12rem",
     borderRadius: "5px",
     color: "lightgray",
     fontSize: "0.8rem",
@@ -12,7 +11,7 @@ export const customStyles = {
     cursor: "pointer",
     border: "2px solid #314360",
     ":hover": {
-      border: "2px solid darkblue",
+      border: "2px solid gray",
     },
   }),
   singleValue: (styles) => ({

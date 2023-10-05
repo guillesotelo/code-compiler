@@ -20,6 +20,7 @@ html {
   background-color: #1B2B34;
   color: lightgray;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .listItem:hover {
@@ -68,9 +69,9 @@ html {
 }
 
 button {
-  padding: 1rem !important;
-  font-size: 1.2rem;
-  background-color: #37586c !important;
+  /* padding: 1rem !important; */
+  /* font-size: 1.2rem; */
+  background-color: #37586c;
   transition: .3s;
 }
 
