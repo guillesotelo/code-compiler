@@ -277,28 +277,28 @@ const Landing = () => {
               />
             </div>
             <div className="right-container flex flex-shrink-0 w-screen flex-col">
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <button
-                onClick={handleCompile}
-                disabled={!code || processing}
-                className={classnames(
-                  "mx-4 mb-4 w-1/2 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
-                  !code ? "opacity-50" : ""
-                )}
-              >
-                {processing ? "Processing..." : "Compile"}
-              </button>
-              <button
-                onClick={() => localStorage.setItem('codeCompilerSave', code)}
-                disabled={!code || processing}
-                className={classnames(
-                  "mx-4 mb-4  w-2/6 rounded-md bg-[#366b55] text-white px-4 py-2 transition duration-200 flex-shrink-0",
-                  !code ? "opacity-50" : ""
-                )}
-              >
-                Save
-              </button>
-            </div>
+              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <button
+                  onClick={() => localStorage.setItem('codeCompilerSave', code)}
+                  disabled={!code || processing}
+                  className={classnames(
+                    "mx-4 mb-4  w-2/6 rounded-md bg-[#366b55] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                    !code ? "opacity-50" : ""
+                  )}
+                >
+                  Save
+                </button>
+                <button
+                  onClick={handleCompile}
+                  disabled={!code || processing}
+                  className={classnames(
+                    "mx-4 mb-4 w-1/2 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                    !code ? "opacity-50" : ""
+                  )}
+                >
+                  {processing ? "Processing..." : "Compile"}
+                </button>
+              </div>
               <button
                 onClick={() => onChange('code', '')}
                 disabled={processing}
@@ -318,7 +318,7 @@ const Landing = () => {
                 setCustomInput={setCustomInput}
                 isMobile={isMobile}
               />
-              {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+              {outputDetails && <OutputDetails outputDetails={outputDetails} isMobile={isMobile} />}
             </div>
             <div className="dropdowns" style={{ margin: '.5rem auto' }}>
               <LanguagesDropdown onSelectChange={onSelectChange} />
