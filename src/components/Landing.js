@@ -32,6 +32,11 @@ const Landing = () => {
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
 
+  useEffect(() => {
+    const saved = localStorage.getItem('codeCompilerSave')
+    if (saved) setCode(saved)
+  }, [])
+
   const onSelectChange = (sl) => {
     setLanguage(sl);
   };
@@ -204,16 +209,28 @@ const Landing = () => {
                 isMobile={isMobile}
               />
               <div className="px-3 right-container flex justify-between flex-shrink-0 gap-2 flex-row w-full">
-                <button
-                  onClick={handleCompile}
-                  disabled={!code || processing}
-                  className={classnames(
-                    "mt-4 z-10 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
-                    !code ? "opacity-50" : ""
-                  )}
-                >
-                  {processing ? "Processing..." : "Compile"}
-                </button>
+                <div>
+                  <button
+                    onClick={handleCompile}
+                    disabled={!code || processing}
+                    className={classnames(
+                      "mt-4 z-10 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                      !code ? "opacity-50" : ""
+                    )}
+                  >
+                    {processing ? "Processing..." : "Compile"}
+                  </button>
+                  <button
+                    onClick={() => localStorage.setItem('codeCompilerSave', code)}
+                    disabled={!code || processing}
+                    className={classnames(
+                      "mt-4 mx-4 z-10 rounded-md bg-[#366b55] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                      !code ? "opacity-50" : ""
+                    )}
+                  >
+                    Save
+                  </button>
+                </div>
                 <button
                   onClick={() => onChange('code', '')}
                   disabled={processing}
@@ -260,16 +277,28 @@ const Landing = () => {
               />
             </div>
             <div className="right-container flex flex-shrink-0 w-screen flex-col">
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               <button
                 onClick={handleCompile}
                 disabled={!code || processing}
                 className={classnames(
-                  "mx-4 mb-4 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                  "mx-4 mb-4 w-1/2 rounded-md bg-[#37586c] text-white px-4 py-2 transition duration-200 flex-shrink-0",
                   !code ? "opacity-50" : ""
                 )}
               >
                 {processing ? "Processing..." : "Compile"}
               </button>
+              <button
+                onClick={() => localStorage.setItem('codeCompilerSave', code)}
+                disabled={!code || processing}
+                className={classnames(
+                  "mx-4 mb-4  w-2/6 rounded-md bg-[#366b55] text-white px-4 py-2 transition duration-200 flex-shrink-0",
+                  !code ? "opacity-50" : ""
+                )}
+              >
+                Save
+              </button>
+            </div>
               <button
                 onClick={() => onChange('code', '')}
                 disabled={processing}
@@ -283,7 +312,7 @@ const Landing = () => {
               </button>
             </div>
             <div className="right-container flex flex-shrink-0 flex-col">
-              <OutputWindow outputDetails={outputDetails} isMobile={isMobile}/>
+              <OutputWindow outputDetails={outputDetails} isMobile={isMobile} />
               <CustomInput
                 customInput={customInput}
                 setCustomInput={setCustomInput}
